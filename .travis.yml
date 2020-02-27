@@ -7,8 +7,9 @@ install:
   - npm ci
 
 script:
+  - npm run build
   - echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker build -t idena-rpc .
+  - docker build -t rpc .
   - docker images
-  - docker tag idena-rpc $DOCKER_USERNAME/idena-rpc
-  - docker push $DOCKER_USERNAME/idena-rpc
+  - docker tag rpc $DOCKER_USERNAME/rpc:latest
+  - docker push $DOCKER_USERNAME/rpc:latest
