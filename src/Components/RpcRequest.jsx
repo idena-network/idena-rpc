@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import wretch from 'wretch';
 import styled from 'styled-components';
-import shema from '../schema';
 import globals from '../globals';
 
 const StyledWrapper = styled.div``;

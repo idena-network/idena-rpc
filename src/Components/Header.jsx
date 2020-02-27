@@ -21,12 +21,6 @@ const StyledCaption = styled.div`
   margin-right: 10px;
 `;
 
-const StlyedNodes = styled.div`
-  display: flex;
-  width: 200px;
-  justify-content: space-between;
-`;
-
 class Header extends Component {
   constructor(props) {
     super(props);
