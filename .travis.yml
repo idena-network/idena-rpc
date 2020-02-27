@@ -1,0 +1,14 @@
+dist: xenial
+
+language: node_js
+node_js: '10'
+
+install:
+  - npm ci
+
+script:
+  - echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker build -t idena-rpc .
+  - docker images
+  - docker tag idena-rpc $DOCKER_USERNAME/idena-rpc
+  - docker push $DOCKER_USERNAME/idena-rpc
