@@ -54,7 +54,6 @@
         },
         {
           method: 'bcn_sendRawTx',
-          paramsAsObject: true,
           title: 'Send raw TX',
           params: [{ title: 'Tx', name: 'tx', required: true }]
         },
