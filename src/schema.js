@@ -160,6 +160,11 @@
           method: 'flip_words',
           title: 'Flip words',
           params: [{ title: 'Hash', name: 'hash', required: true }]
+        },
+        {
+          method: 'flip_delete',
+          title: 'Delete flip',
+          params: [{ title: 'Hash', name: 'hash', required: true }]
         }
       ]
     },
