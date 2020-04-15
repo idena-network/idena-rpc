@@ -178,10 +178,7 @@
         {
           method: 'net_addPeer',
           title: 'Add peer',
-          params: [
-            { title: 'PeerId', name: 'peerId', required: true },
-            { title: 'Url', name: 'url', required: true },
-          ],
+          params: [{ title: 'Url', name: 'url', required: true }],
         },
         {
           method: 'net_ipfsAddress',
