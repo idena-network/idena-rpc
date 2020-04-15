@@ -5,32 +5,32 @@
       endpoints: [
         {
           method: 'bcn_lastBlock',
-          title: 'Get last block'
+          title: 'Get last block',
         },
         {
           method: 'bcn_blockAt',
           title: 'Get block by height',
           params: [
-            { title: 'Height', type: 'int', name: 'height', required: true }
-          ]
+            { title: 'Height', type: 'int', name: 'height', required: true },
+          ],
         },
         {
           method: 'bcn_block',
           title: 'Get block by hash',
-          params: [{ title: 'Hash', name: 'hash', required: true }]
+          params: [{ title: 'Hash', name: 'hash', required: true }],
         },
         {
           method: 'bcn_transaction',
           title: 'Get transaction',
-          params: [{ title: 'Hash', name: 'hash', required: true }]
+          params: [{ title: 'Hash', name: 'hash', required: true }],
         },
         {
           method: 'bcn_mempool',
-          title: 'Get mempool'
+          title: 'Get mempool',
         },
         {
           method: 'bcn_syncing',
-          title: 'Check sync'
+          title: 'Check sync',
         },
         {
           method: 'bcn_transactions',
@@ -39,23 +39,23 @@
           params: [
             { title: 'Address', name: 'address', required: true },
             { title: 'Count', name: 'count', type: 'int', defaultValue: 0 },
-            { title: 'Token', name: 'token' }
-          ]
+            { title: 'Token', name: 'token' },
+          ],
         },
         {
           method: 'bcn_pendingTransactions',
           paramsAsObject: true,
           title: 'Get address pending txs',
-          params: [{ title: 'Address', name: 'address', required: true }]
+          params: [{ title: 'Address', name: 'address', required: true }],
         },
         {
           method: 'bcn_burntCoins',
-          title: 'Get burnt coins'
+          title: 'Get burnt coins',
         },
         {
           method: 'bcn_sendRawTx',
           title: 'Send raw TX',
-          params: [{ title: 'Tx', name: 'tx', required: true }]
+          params: [{ title: 'Tx', name: 'tx', required: true }],
         },
         {
           method: 'bcn_getRawTx',
@@ -81,9 +81,9 @@
                 { value: 10, title: 'KillInviteeTx' },
                 { value: 11, title: 'ChangeGodAddressTx' },
                 { value: 12, title: 'BurnTx' },
-                { value: 13, title: 'ChangeProfileTx' }
+                { value: 13, title: 'ChangeProfileTx' },
               ],
-              defaultValue: 0
+              defaultValue: 0,
             },
             { title: 'From', name: 'from', required: true },
             { title: 'To', name: 'to' },
@@ -92,24 +92,24 @@
               title: 'Max Fee',
               type: 'float',
               name: 'maxFee',
-              defaultValue: 0
+              defaultValue: 0,
             },
             {
               title: 'Tips',
               type: 'float',
               name: 'tips',
-              defaultValue: 0
+              defaultValue: 0,
             },
             { title: 'Nonce', type: 'int', name: 'nonce', defaultValue: 0 },
             { title: 'Epoch', type: 'int', name: 'epoch', defaultValue: 0 },
-            { title: 'Payload', name: 'payload' }
-          ]
+            { title: 'Payload', name: 'payload' },
+          ],
         },
         {
           method: 'bcn_feePerByte',
-          title: 'Get fee rate'
-        }
-      ]
+          title: 'Get fee rate',
+        },
+      ],
     },
     {
       title: 'Flip API',
@@ -120,21 +120,21 @@
           paramsAsObject: true,
           params: [
             { title: 'Hex', name: 'hex', required: true },
-            { title: 'Pair', type: 'int', name: 'pairId', required: true }
-          ]
+            { title: 'Pair', type: 'int', name: 'pairId', required: true },
+          ],
         },
         {
           method: 'flip_shortHashes',
-          title: 'Get short flip hashes'
+          title: 'Get short flip hashes',
         },
         {
           method: 'flip_longHashes',
-          title: 'Get long flip hashes'
+          title: 'Get long flip hashes',
         },
         {
           method: 'flip_get',
           title: 'Get flip',
-          params: [{ title: 'Hash', name: 'hash', required: true }]
+          params: [{ title: 'Hash', name: 'hash', required: true }],
         },
         {
           method: 'flip_submitShortAnswers',
@@ -143,8 +143,8 @@
           params: [
             { title: 'Answers', name: 'answers', type: 'json', required: true },
             { title: 'Nonce', type: 'int', name: 'nonce', defaultValue: 0 },
-            { title: 'Epoch', type: 'int', name: 'epoch', defaultValue: 0 }
-          ]
+            { title: 'Epoch', type: 'int', name: 'epoch', defaultValue: 0 },
+          ],
         },
         {
           method: 'flip_submitLongAnswers',
@@ -153,67 +153,66 @@
           params: [
             { title: 'Answers', name: 'answers', type: 'json', required: true },
             { title: 'Nonce', type: 'int', name: 'nonce', defaultValue: 0 },
-            { title: 'Epoch', type: 'int', name: 'epoch', defaultValue: 0 }
-          ]
+            { title: 'Epoch', type: 'int', name: 'epoch', defaultValue: 0 },
+          ],
         },
         {
           method: 'flip_words',
           title: 'Flip words',
-          params: [{ title: 'Hash', name: 'hash', required: true }]
+          params: [{ title: 'Hash', name: 'hash', required: true }],
         },
         {
           method: 'flip_delete',
           title: 'Delete flip',
-          params: [{ title: 'Hash', name: 'hash', required: true }]
-        }
-      ]
+          params: [{ title: 'Hash', name: 'hash', required: true }],
+        },
+      ],
     },
     {
       title: 'Net API',
       endpoints: [
         {
           method: 'net_peers',
-          title: 'Get peers'
+          title: 'Get peers',
         },
         {
           method: 'net_addPeer',
           title: 'Add peer',
-          params: [{ title: 'Url', name: 'url', required: true }]
-        },
-        {
-          method: 'net_enode',
-          title: 'Get enode'
+          params: [
+            { title: 'PeerId', name: 'peerId', required: true },
+            { title: 'Url', name: 'url', required: true },
+          ],
         },
         {
           method: 'net_ipfsAddress',
-          title: 'Get ipfs addr'
-        }
-      ]
+          title: 'Get ipfs addr',
+        },
+      ],
     },
     {
       title: 'Dna API',
       endpoints: [
         {
           method: 'dna_identities',
-          title: 'Get identities'
+          title: 'Get identities',
         },
         {
           method: 'dna_identity',
           title: 'Get identity',
-          params: [{ title: 'Address', name: 'addr' }]
+          params: [{ title: 'Address', name: 'addr' }],
         },
         {
           method: 'dna_state',
-          title: 'Get current process'
+          title: 'Get current process',
         },
         {
           method: 'dna_getCoinbaseAddr',
-          title: 'Get coinbase address'
+          title: 'Get coinbase address',
         },
         {
           method: 'dna_getBalance',
           title: 'Get balance',
-          params: [{ title: 'Address', name: 'addr', required: true }]
+          params: [{ title: 'Address', name: 'addr', required: true }],
         },
         {
           method: 'dna_sendTransaction',
@@ -225,7 +224,7 @@
               name: 'type',
               type: 'int',
               defaultValue: 0,
-              hidden: true
+              hidden: true,
             },
             { title: 'From', name: 'from', required: true },
             { title: 'To', name: 'to', required: true },
@@ -234,11 +233,11 @@
               title: 'Max Fee',
               type: 'float',
               name: 'maxFee',
-              defaultValue: 0
+              defaultValue: 0,
             },
             { title: 'Nonce', type: 'int', name: 'nonce', defaultValue: 0 },
-            { title: 'Epoch', type: 'int', name: 'epoch', defaultValue: 0 }
-          ]
+            { title: 'Epoch', type: 'int', name: 'epoch', defaultValue: 0 },
+          ],
         },
         {
           method: 'dna_sendInvite',
@@ -248,8 +247,8 @@
             { title: 'To', name: 'to' },
             { title: 'Amount', name: 'amount' },
             { title: 'Nonce', type: 'int', name: 'nonce', defaultValue: 0 },
-            { title: 'Epoch', type: 'int', name: 'epoch', defaultValue: 0 }
-          ]
+            { title: 'Epoch', type: 'int', name: 'epoch', defaultValue: 0 },
+          ],
         },
         {
           method: 'dna_activateInvite',
@@ -259,8 +258,8 @@
             { title: 'Key', name: 'key' },
             { title: 'To', name: 'to', required: true },
             { title: 'Nonce', type: 'int', name: 'nonce', defaultValue: 0 },
-            { title: 'Epoch', type: 'int', name: 'epoch', defaultValue: 0 }
-          ]
+            { title: 'Epoch', type: 'int', name: 'epoch', defaultValue: 0 },
+          ],
         },
         {
           method: 'dna_sendTransaction',
@@ -272,7 +271,7 @@
               name: 'type',
               type: 'int',
               defaultValue: 3,
-              hidden: true
+              hidden: true,
             },
             { title: 'From', name: 'from', required: true },
             { title: 'To', name: 'to', required: true },
@@ -280,11 +279,11 @@
               title: 'Max Fee',
               type: 'float',
               name: 'maxFee',
-              defaultValue: 0
+              defaultValue: 0,
             },
             { title: 'Nonce', type: 'int', name: 'nonce', defaultValue: 0 },
-            { title: 'Epoch', type: 'int', name: 'epoch', defaultValue: 0 }
-          ]
+            { title: 'Epoch', type: 'int', name: 'epoch', defaultValue: 0 },
+          ],
         },
         {
           method: 'dna_sendTransaction',
@@ -296,7 +295,7 @@
               name: 'type',
               type: 'int',
               defaultValue: 10,
-              hidden: true
+              hidden: true,
             },
             { title: 'From', name: 'from', required: true },
             { title: 'To', name: 'to', required: true },
@@ -304,11 +303,11 @@
               title: 'Max Fee',
               type: 'float',
               name: 'maxFee',
-              defaultValue: 0
+              defaultValue: 0,
             },
             { title: 'Nonce', type: 'int', name: 'nonce', defaultValue: 0 },
-            { title: 'Epoch', type: 'int', name: 'epoch', defaultValue: 0 }
-          ]
+            { title: 'Epoch', type: 'int', name: 'epoch', defaultValue: 0 },
+          ],
         },
         {
           method: 'dna_sendTransaction',
@@ -334,9 +333,9 @@
                 { value: 10, title: 'KillInviteeTx' },
                 { value: 11, title: 'ChangeGodAddressTx' },
                 { value: 12, title: 'BurnTx' },
-                { value: 13, title: 'ChangeProfileTx' }
+                { value: 13, title: 'ChangeProfileTx' },
               ],
-              defaultValue: 0
+              defaultValue: 0,
             },
             { title: 'From', name: 'from', required: true },
             { title: 'To', name: 'to' },
@@ -345,18 +344,18 @@
               title: 'Max Fee',
               type: 'float',
               name: 'maxFee',
-              defaultValue: 0
+              defaultValue: 0,
             },
             {
               title: 'Tips',
               type: 'float',
               name: 'tips',
-              defaultValue: 0
+              defaultValue: 0,
             },
             { title: 'Nonce', type: 'int', name: 'nonce', defaultValue: 0 },
             { title: 'Epoch', type: 'int', name: 'epoch', defaultValue: 0 },
-            { title: 'Payload', name: 'payload' }
-          ]
+            { title: 'Payload', name: 'payload' },
+          ],
         },
         {
           method: 'dna_becomeOnline',
@@ -364,8 +363,8 @@
           paramsAsObject: true,
           params: [
             { title: 'Nonce', type: 'int', name: 'nonce', defaultValue: 0 },
-            { title: 'Epoch', type: 'int', name: 'epoch', defaultValue: 0 }
-          ]
+            { title: 'Epoch', type: 'int', name: 'epoch', defaultValue: 0 },
+          ],
         },
         {
           method: 'dna_becomeOffline',
@@ -373,8 +372,8 @@
           paramsAsObject: true,
           params: [
             { title: 'Nonce', type: 'int', name: 'nonce', defaultValue: 0 },
-            { title: 'Epoch', type: 'int', name: 'epoch', defaultValue: 0 }
-          ]
+            { title: 'Epoch', type: 'int', name: 'epoch', defaultValue: 0 },
+          ],
         },
         {
           method: 'dna_sendTransaction',
@@ -386,7 +385,7 @@
               name: 'type',
               type: 'int',
               defaultValue: 11,
-              hidden: true
+              hidden: true,
             },
             { title: 'From', name: 'from', required: true },
             { title: 'To', name: 'to', required: true },
@@ -394,24 +393,24 @@
               title: 'Max Fee',
               type: 'float',
               name: 'maxFee',
-              defaultValue: 0
+              defaultValue: 0,
             },
             { title: 'Nonce', type: 'int', name: 'nonce', defaultValue: 0 },
-            { title: 'Epoch', type: 'int', name: 'epoch', defaultValue: 0 }
-          ]
+            { title: 'Epoch', type: 'int', name: 'epoch', defaultValue: 0 },
+          ],
         },
         {
           method: 'dna_epoch',
-          title: 'Get epoch'
+          title: 'Get epoch',
         },
         {
           method: 'dna_ceremonyIntervals',
-          title: 'Get ceremony intervals'
+          title: 'Get ceremony intervals',
         },
         {
           method: 'dna_exportKey',
           title: 'Export key',
-          params: [{ title: 'Password', name: 'pasword', required: true }]
+          params: [{ title: 'Password', name: 'pasword', required: true }],
         },
         {
           method: 'dna_burn',
@@ -425,11 +424,11 @@
               title: 'Max Fee',
               type: 'float',
               name: 'maxFee',
-              defaultValue: 0
+              defaultValue: 0,
             },
             { title: 'Nonce', type: 'int', name: 'nonce', defaultValue: 0 },
-            { title: 'Epoch', type: 'int', name: 'epoch', defaultValue: 0 }
-          ]
+            { title: 'Epoch', type: 'int', name: 'epoch', defaultValue: 0 },
+          ],
         },
         {
           method: 'dna_changeProfile',
@@ -438,27 +437,32 @@
           params: [
             { title: 'Info', name: 'info' },
             { title: 'Nickname', name: 'nickname' },
-            { title: 'Max Fee', type: 'float', name: 'maxFee', defaultValue: 0 }
-          ]
+            {
+              title: 'Max Fee',
+              type: 'float',
+              name: 'maxFee',
+              defaultValue: 0,
+            },
+          ],
         },
         {
           method: 'dna_profile',
           title: 'Get profile',
-          params: [{ title: 'Address', name: 'address' }]
-        }
-      ]
+          params: [{ title: 'Address', name: 'address' }],
+        },
+      ],
     },
     {
       title: 'Account API',
       endpoints: [
         {
           method: 'account_list',
-          title: 'Get accounts'
+          title: 'Get accounts',
         },
         {
           method: 'account_create',
           title: 'Add account',
-          params: [{ title: 'Password', name: 'passPhrase' }]
+          params: [{ title: 'Password', name: 'passPhrase' }],
         },
         {
           method: 'account_unlock',
@@ -466,17 +470,17 @@
           params: [
             { title: 'Address', name: 'addr' },
             { title: 'Password', name: 'passPhrase' },
-            { title: 'Time', name: 'time', defaultValue: 0, type: 'int' }
-          ]
+            { title: 'Time', name: 'time', defaultValue: 0, type: 'int' },
+          ],
         },
         {
           method: 'account_lock',
           title: 'Lock account',
-          params: [{ title: 'Address', name: 'addr' }]
-        }
-      ]
-    }
-  ]
+          params: [{ title: 'Address', name: 'addr' }],
+        },
+      ],
+    },
+  ],
 };
 
 export default sсhema;
