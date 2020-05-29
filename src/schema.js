@@ -447,6 +447,16 @@
           title: 'Get profile',
           params: [{ title: 'Address', name: 'address' }],
         },
+        {
+          method: 'dna_activateInviteToRandAddr',
+          title: 'Activate invite to random address',
+          paramsAsObject: true,
+          params: [
+            { title: 'Key', name: 'key', required: true },
+            { title: 'Nonce', type: 'int', name: 'nonce', defaultValue: 0 },
+            { title: 'Epoch', type: 'int', name: 'epoch', defaultValue: 0 },
+          ],
+        },
       ],
     },
     {
