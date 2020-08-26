@@ -119,8 +119,8 @@
           title: 'Submit flip',
           paramsAsObject: true,
           params: [
-            { title: 'PublicHex', name: 'hex', required: true },
-            { title: 'PrivateHex', name: 'hex', required: true },
+            { title: 'PublicHex', name: 'publicHex', required: true },
+            { title: 'PrivateHex', name: 'privateHex', required: true },
             { title: 'Pair', type: 'int', name: 'pairId', required: true },
           ],
         },
