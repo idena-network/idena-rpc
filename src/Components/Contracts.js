@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import shema from '../schema';
+import contracts from '../schemas/contracts';
 import globals from '../globals';
 import wretch from 'wretch';
 
@@ -30,9 +30,7 @@ export default function Contracts({ onResponse }) {
     args: [],
   });
 
-  const selectedContract = shema.contracts.find(
-    (x) => x.name === state.contract
-  );
+  const selectedContract = contracts.find((x) => x.name === state.contract);
 
   const selectedMethod =
     selectedContract &&
@@ -161,7 +159,7 @@ export default function Contracts({ onResponse }) {
             onChange={(e) => setState({ ...state, contract: e.target.value })}
           >
             <option value="">Pick a cotract...</option>
-            {shema.contracts.map((contract) => (
+            {contracts.map((contract) => (
               <option value={contract.name}>{contract.name}</option>
             ))}
           </select>

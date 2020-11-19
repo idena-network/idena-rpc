@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import Output from './Output';
 import RpcRequest from './RpcRequest';
-import shema from '../schema';
+import apis from '../schemas/apis';
 import Contracts from './Contracts';
 
 const StyledWrapper = styled.div`
@@ -80,7 +80,7 @@ class Board extends Component {
             <SyledGroupHeader>Contracts</SyledGroupHeader>
             <Contracts onResponse={(resp) => this.addJson(resp)} />
           </StyledGroup>
-          {shema.apis.map((api) => {
+          {apis.map((api) => {
             return (
               <StyledGroup key={api.title}>
                 <SyledGroupHeader>{api.title}</SyledGroupHeader>
