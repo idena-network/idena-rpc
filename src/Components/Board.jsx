@@ -1,8 +1,9 @@
-import React, { Component } from "react";
-import styled from "styled-components";
-import Output from "./Output";
-import RpcRequest from "./RpcRequest";
-import shema from "../schema";
+import React, { Component } from 'react';
+import styled from 'styled-components';
+import Output from './Output';
+import RpcRequest from './RpcRequest';
+import shema from '../schema';
+import Contracts from './Contracts';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -53,7 +54,7 @@ class Board extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      outputs: []
+      outputs: [],
     };
   }
 
@@ -61,13 +62,13 @@ class Board extends Component {
     const outputs = this.state.outputs.slice();
     outputs.unshift(obj);
     this.setState({
-      outputs: outputs
+      outputs: outputs,
     });
   }
 
   clear() {
     this.setState({
-      outputs: []
+      outputs: [],
     });
   }
 
@@ -75,19 +76,29 @@ class Board extends Component {
     return (
       <StyledWrapper>
         <div>
-          {shema.apis.map(api => {
+          <StyledGroup key={'contracts'}>
+            <SyledGroupHeader>Contracts</SyledGroupHeader>
+            <Contracts onResponse={(resp) => this.addJson(resp)} />
+          </StyledGroup>
+          {shema.apis.map((api) => {
             return (
               <StyledGroup key={api.title}>
                 <SyledGroupHeader>{api.title}</SyledGroupHeader>
-                {api.endpoints.map(endpoint => {
-                  return <RpcRequest key={endpoint.method} onResponse={resp => this.addJson(resp)} data={endpoint} />;
+                {api.endpoints.map((endpoint) => {
+                  return (
+                    <RpcRequest
+                      key={endpoint.method}
+                      onResponse={(resp) => this.addJson(resp)}
+                      data={endpoint}
+                    />
+                  );
                 })}
               </StyledGroup>
             );
           })}
         </div>
         <div>
-          {this.state.outputs.map(item => {
+          {this.state.outputs.map((item) => {
             return <Output value={item} />;
           })}
           <StyledClear onClick={this.clear.bind(this)}>clear</StyledClear>
