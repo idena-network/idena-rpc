@@ -141,15 +141,15 @@ export default function Contracts({ onResponse }) {
   };
 
   const estimate = async () => {
-    await call(`contract_${selectedMethod.name}`);
-  };
-
-  const send = async () => {
     await call(
       `contract_estimate${selectedMethod.name
         .substr(0, 1)
         .toUpperCase()}${selectedMethod.name.substr(1)}`
     );
+  };
+
+  const send = async () => {
+    await call(`contract_${selectedMethod.name}`);
   };
 
   return (
