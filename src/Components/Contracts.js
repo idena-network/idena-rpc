@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import contracts from '../schemas/contracts';
-import globals from '../globals';
-import wretch from 'wretch';
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import contracts from "../schemas/contracts";
+import globals from "../globals";
+import wretch from "wretch";
 
 const StyledWrapper = styled.div``;
 
@@ -24,8 +24,8 @@ const StyledParameter = styled.div`
 
 export default function Contracts({ onResponse }) {
   const [state, setState] = useState({
-    contract: '',
-    method: '',
+    contract: "",
+    method: "",
     params: {},
     args: [],
   });
@@ -46,7 +46,7 @@ export default function Contracts({ onResponse }) {
 
   const prepareParams = () => {
     function toHex(str) {
-      var result = '0x';
+      var result = "0x";
       for (var i = 0; i < str.length; i++) {
         result += str.charCodeAt(i).toString(16);
       }
@@ -54,10 +54,10 @@ export default function Contracts({ onResponse }) {
     }
 
     const extractParamValue = function(value, type) {
-      if (type === 'int') return parseInt(value);
-      if (type === 'float') return parseFloat(value);
-      if (type === 'json') return JSON.parse(value);
-      if (type === 'jsonToHex') return toHex(value);
+      if (type === "int") return parseInt(value);
+      if (type === "float") return parseFloat(value);
+      if (type === "json") return JSON.parse(value);
+      if (type === "jsonToHex") return toHex(value);
       return value;
     };
 
@@ -81,10 +81,14 @@ export default function Contracts({ onResponse }) {
 
     if (selectedMethod && selectedMethod.args) {
       obj.args = selectedMethod.args.map((a, idx) => {
+        const paramValue = extractParamValue(
+          state.args[idx] || a.defaultValue,
+          a.type
+        );
         return {
           index: idx,
           format: a.format,
-          value: extractParamValue(state.args[idx] || a.defaultValue, a.type),
+          value: paramValue ? paramValue.toString() : null,
         };
       });
     }
@@ -140,14 +144,14 @@ export default function Contracts({ onResponse }) {
 
   const estimate = async () => {
     await call(
-      `contract_estimate${selectedMethod.name
+      `contract_estimate${selectedMethod.method
         .substr(0, 1)
-        .toUpperCase()}${selectedMethod.name.substr(1)}`
+        .toUpperCase()}${selectedMethod.method.substr(1)}`
     );
   };
 
   const send = async () => {
-    await call(`contract_${selectedMethod.name}`);
+    await call(`contract_${selectedMethod.method}`);
   };
 
   return (
@@ -172,7 +176,9 @@ export default function Contracts({ onResponse }) {
             <option value="">Select method...</option>
             {selectedContract &&
               selectedContract.methods.map((method) => (
-                <option value={method.name}>{method.name}</option>
+                <option value={method.name}>
+                  {method.name}
+                </option>
               ))}
           </select>
         </StyledParameter>
@@ -180,8 +186,8 @@ export default function Contracts({ onResponse }) {
           <>
             <StyledBody
               style={{
-                borderTop: '1px solid #ccc',
-                fontWeight: 'bold',
+                borderTop: "1px solid #ccc",
+                fontWeight: "bold",
               }}
             >
               Params
@@ -191,7 +197,7 @@ export default function Contracts({ onResponse }) {
                 return item.hidden ? null : (
                   <StyledParameter key={item.name}>
                     <div className="label">{item.title}</div>
-                    {item.inputType === 'select' ? (
+                    {item.inputType === "select" ? (
                       <select
                         name={item.name}
                         onChange={changeParamsValue}
@@ -205,7 +211,9 @@ export default function Contracts({ onResponse }) {
                       <input
                         type="text"
                         name={item.name}
-                        value={state.params[item.name] || ''}
+                        value={
+                          state.params[item.name] || item.defaultValue || ""
+                        }
                         onChange={changeParamsValue}
                       />
                     )}
@@ -218,8 +226,8 @@ export default function Contracts({ onResponse }) {
 
             <StyledBody
               style={{
-                borderTop: '1px solid #ccc',
-                fontWeight: 'bold',
+                borderTop: "1px solid #ccc",
+                fontWeight: "bold",
               }}
             >
               Args
@@ -230,7 +238,7 @@ export default function Contracts({ onResponse }) {
                 return item.hidden ? null : (
                   <StyledParameter key={item.idx}>
                     <div className="label">{item.title}</div>
-                    {item.inputType === 'select' ? (
+                    {item.inputType === "select" ? (
                       <select
                         name={item.name}
                         onChange={(e) => changeArgsValue(e, idx)}
@@ -255,7 +263,7 @@ export default function Contracts({ onResponse }) {
                   </StyledParameter>
                 );
               })}
-            <StyledParameter key={'actions'}>
+            <StyledParameter key={"actions"}>
               <div className="label"></div>
               <button onClick={estimate} style={{ marginRight: 10 }}>
                 Estimate
