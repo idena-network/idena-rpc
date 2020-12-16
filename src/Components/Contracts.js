@@ -3,6 +3,14 @@ import styled from 'styled-components';
 import contracts from '../schemas/contracts';
 import globals from '../globals';
 import wretch from 'wretch';
+import {
+  hexToUint8Array,
+  int16ToBuffer,
+  int32ToBuffer,
+  toBuffer,
+  toHexString,
+} from '../utils';
+import sha3 from 'js-sha3';
 
 const StyledWrapper = styled.div``;
 
@@ -19,6 +27,16 @@ const StyledParameter = styled.div`
   }
   .required {
     color: red;
+  }
+`;
+
+const StyledCaption = styled.div`
+  font-size: 20px;
+  padding: 5px;
+  cursor: pointer;
+
+  &:hover {
+    color: #777;
   }
 `;
 
@@ -155,122 +173,207 @@ export default function Contracts({ onResponse }) {
   };
 
   return (
-    <StyledWrapper>
-      <StyledBody>
-        <StyledParameter>
-          <div className="label">Contract</div>
-          <select
-            onChange={(e) => setState({ ...state, contract: e.target.value })}
-          >
-            <option value="">Pick a cotract...</option>
-            {contracts.map((contract) => (
-              <option value={contract.name}>{contract.name}</option>
-            ))}
-          </select>
-        </StyledParameter>
-        <StyledParameter>
-          <div className="label">Method</div>
-          <select
-            onChange={(e) => setState({ ...state, method: e.target.value })}
-          >
-            <option value="">Select method...</option>
-            {selectedContract &&
-              selectedContract.methods.map((method) => (
-                <option value={method.name}>{method.name}</option>
+    <>
+      <StyledWrapper>
+        <StyledBody>
+          <StyledParameter>
+            <div className="label">Contract</div>
+            <select
+              onChange={(e) => setState({ ...state, contract: e.target.value })}
+            >
+              <option value="">Pick a cotract...</option>
+              {contracts.map((contract) => (
+                <option value={contract.name}>{contract.name}</option>
               ))}
-          </select>
-        </StyledParameter>
-        {selectedMethod && (
-          <>
-            <StyledBody
-              style={{
-                borderTop: '1px solid #ccc',
-                fontWeight: 'bold',
-              }}
+            </select>
+          </StyledParameter>
+          <StyledParameter>
+            <div className="label">Method</div>
+            <select
+              onChange={(e) => setState({ ...state, method: e.target.value })}
             >
-              Params
-            </StyledBody>
-            {selectedMethod.params &&
-              selectedMethod.params.map((item) => {
-                return item.hidden ? null : (
-                  <StyledParameter key={item.name}>
-                    <div className="label">{item.title}</div>
-                    {item.inputType === 'select' ? (
-                      <select
-                        name={item.name}
-                        onChange={changeParamsValue}
-                        value={state.params[item.name] || item.values[0].value}
-                      >
-                        {item.values.map((v) => {
-                          return <option value={v.value}>{v.title}</option>;
-                        })}
-                      </select>
-                    ) : (
-                      <input
-                        type="text"
-                        name={item.name}
-                        value={
-                          state.params[item.name] || item.defaultValue || ''
-                        }
-                        onChange={changeParamsValue}
-                      />
-                    )}
-                    {item.required ? (
-                      <div className="required">&nbsp;*required</div>
-                    ) : null}
-                  </StyledParameter>
-                );
-              })}
+              <option value="">Select method...</option>
+              {selectedContract &&
+                selectedContract.methods.map((method) => (
+                  <option value={method.name}>{method.name}</option>
+                ))}
+            </select>
+          </StyledParameter>
+          {selectedMethod && (
+            <>
+              <StyledBody
+                style={{
+                  borderTop: '1px solid #ccc',
+                  fontWeight: 'bold',
+                }}
+              >
+                Params
+              </StyledBody>
+              {selectedMethod.params &&
+                selectedMethod.params.map((item) => {
+                  return item.hidden ? null : (
+                    <StyledParameter key={item.name}>
+                      <div className="label">{item.title}</div>
+                      {item.inputType === 'select' ? (
+                        <select
+                          name={item.name}
+                          onChange={changeParamsValue}
+                          value={
+                            state.params[item.name] || item.values[0].value
+                          }
+                        >
+                          {item.values.map((v) => {
+                            return <option value={v.value}>{v.title}</option>;
+                          })}
+                        </select>
+                      ) : (
+                        <input
+                          type="text"
+                          name={item.name}
+                          value={
+                            state.params[item.name] || item.defaultValue || ''
+                          }
+                          onChange={changeParamsValue}
+                        />
+                      )}
+                      {item.required ? (
+                        <div className="required">&nbsp;*required</div>
+                      ) : null}
+                    </StyledParameter>
+                  );
+                })}
 
-            <StyledBody
-              style={{
-                borderTop: '1px solid #ccc',
-                fontWeight: 'bold',
-              }}
-            >
-              Args
-            </StyledBody>
+              <StyledBody
+                style={{
+                  borderTop: '1px solid #ccc',
+                  fontWeight: 'bold',
+                }}
+              >
+                Args
+              </StyledBody>
 
-            {selectedMethod.args &&
-              selectedMethod.args.map((item, idx) => {
-                return item.hidden ? null : (
-                  <StyledParameter key={item.idx}>
-                    <div className="label">{item.title}</div>
-                    {item.inputType === 'select' ? (
-                      <select
-                        name={item.name}
-                        onChange={(e) => changeArgsValue(e, idx)}
-                        value={state.args[idx] || item.values[0].value}
-                      >
-                        {item.values.map((v) => {
-                          return <option value={v.value}>{v.title}</option>;
-                        })}
-                      </select>
-                    ) : (
-                      <input
-                        type="text"
-                        name={item.name}
-                        value={state.args[idx] || item.defaultValue}
-                        onChange={(e) => changeArgsValue(e, idx)}
-                        placeholder={item.placeholder}
-                      />
-                    )}
-                    {item.required ? (
-                      <div className="required">&nbsp;*required</div>
-                    ) : null}
-                  </StyledParameter>
-                );
-              })}
-            <StyledParameter key={'actions'}>
-              <div className="label"></div>
-              <button onClick={estimate} style={{ marginRight: 10 }}>
-                Estimate
-              </button>
-              <button onClick={send}>Send</button>
-            </StyledParameter>
-          </>
-        )}
-      </StyledBody>
-    </StyledWrapper>
+              {selectedMethod.args &&
+                selectedMethod.args.map((item, idx) => {
+                  return item.hidden ? null : (
+                    <StyledParameter key={item.idx}>
+                      <div className="label">{item.title}</div>
+                      {item.inputType === 'select' ? (
+                        <select
+                          name={item.name}
+                          onChange={(e) => changeArgsValue(e, idx)}
+                          value={state.args[idx] || item.values[0].value}
+                        >
+                          {item.values.map((v) => {
+                            return <option value={v.value}>{v.title}</option>;
+                          })}
+                        </select>
+                      ) : (
+                        <input
+                          type="text"
+                          name={item.name}
+                          value={state.args[idx] || item.defaultValue}
+                          onChange={(e) => changeArgsValue(e, idx)}
+                          placeholder={item.placeholder}
+                        />
+                      )}
+                      {item.required ? (
+                        <div className="required">&nbsp;*required</div>
+                      ) : null}
+                    </StyledParameter>
+                  );
+                })}
+              <StyledParameter key={'actions'}>
+                <div className="label"></div>
+                <button onClick={estimate} style={{ marginRight: 10 }}>
+                  Estimate
+                </button>
+                <button onClick={send}>Send</button>
+              </StyledParameter>
+            </>
+          )}
+        </StyledBody>
+      </StyledWrapper>
+      <PredictAddress onResponse={onResponse} />
+    </>
   );
 }
+
+const PredictAddress = ({ onResponse }) => {
+  const [state, setState] = useState({});
+  const [predict, showPredict] = useState(false);
+
+  const getAddress = async () => {
+    const request = {
+      address: state.address,
+      epoch: state.epoch,
+      nonce: state.nonce,
+    };
+    const start = new Date();
+
+    let response = {};
+    try {
+      const addr = toBuffer(hexToUint8Array(state.address));
+      const epoch = int16ToBuffer(parseInt(state.epoch));
+      const nonce = int32ToBuffer(parseInt(state.nonce));
+      const res = [...addr, ...epoch, ...nonce];
+      const hash = sha3.keccak_256.array(res);
+      response.address = toHexString(hash.slice(hash.length - 20), true);
+    } catch (e) {
+      response.error = e.toString();
+    }
+
+    const end = new Date();
+
+    const output = {
+      start: start,
+      end: end,
+      request: request,
+      response: response,
+    };
+
+    onResponse(output);
+  };
+
+  return (
+    <StyledWrapper>
+      <StyledCaption onClick={() => showPredict(!predict)}>
+        Get contract address
+      </StyledCaption>
+      {predict && (
+        <StyledBody>
+          <StyledParameter key={'address'}>
+            <div className="label">Sender</div>
+            <input
+              type="text"
+              name={'address'}
+              value={state.address}
+              onChange={(e) => setState({ ...state, address: e.target.value })}
+            />
+            <div className="required">&nbsp;*required</div>
+          </StyledParameter>
+          <StyledParameter key={'epoch'}>
+            <div className="label">Epoch</div>
+            <input
+              type="text"
+              name={'epoch'}
+              value={state.epoch}
+              onChange={(e) => setState({ ...state, epoch: e.target.value })}
+            />
+            <div className="required">&nbsp;*required</div>
+          </StyledParameter>
+          <StyledParameter key={'nonce'}>
+            <div className="label">Nonce</div>
+            <input
+              type="text"
+              name={'nonce'}
+              value={state.nonce}
+              onChange={(e) => setState({ ...state, nonce: e.target.value })}
+            />
+            <div className="required">&nbsp;*required</div>
+          </StyledParameter>
+          <button onClick={() => getAddress()}>Get address</button>
+        </StyledBody>
+      )}
+    </StyledWrapper>
+  );
+};
