@@ -105,7 +105,7 @@
         ],
       },
       {
-        method: "bcn_feePerByte",
+        method: "bcn_feePerGas",
         title: "Get fee rate",
       },
       {
