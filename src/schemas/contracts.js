@@ -360,6 +360,11 @@ const contracts = [
         params: generateCallParams('push'),
       },
       {
+        name: 'CheckOracleVoting',
+        method: 'call',
+        params: generateCallParams('checkOracleVoting'),
+      },
+      {
         name: 'terminate',
         method: 'terminate',
         params: generateTerminateParams(),
