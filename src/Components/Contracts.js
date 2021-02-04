@@ -42,6 +42,7 @@ const StyledCaption = styled.div`
 
 export default function Contracts({ onResponse }) {
   const [state, setState] = useState({
+    argsKey: '',
     contract: '',
     method: '',
     params: {},
@@ -58,6 +59,7 @@ export default function Contracts({ onResponse }) {
     if (selectedMethod && selectedMethod.args)
       setState({
         ...state,
+        argsKey: selectedContract.name + selectedMethod.name,
         args: new Array(selectedMethod.args.length).fill(null),
       });
   }, [selectedMethod]);
@@ -252,36 +254,38 @@ export default function Contracts({ onResponse }) {
                 Args
               </StyledBody>
 
-              {selectedMethod.args &&
-                selectedMethod.args.map((item, idx) => {
-                  return item.hidden ? null : (
-                    <StyledParameter key={item.idx}>
-                      <div className="label">{item.title}</div>
-                      {item.inputType === 'select' ? (
-                        <select
-                          name={item.name}
-                          onChange={(e) => changeArgsValue(e, idx)}
-                          value={state.args[idx] || item.values[0].value}
-                        >
-                          {item.values.map((v) => {
-                            return <option value={v.value}>{v.title}</option>;
-                          })}
-                        </select>
-                      ) : (
-                        <input
-                          type="text"
-                          name={item.name}
-                          value={state.args[idx] || item.defaultValue}
-                          onChange={(e) => changeArgsValue(e, idx)}
-                          placeholder={item.placeholder}
-                        />
-                      )}
-                      {item.required ? (
-                        <div className="required">&nbsp;*required</div>
-                      ) : null}
-                    </StyledParameter>
-                  );
-                })}
+              <div key={state.argsKey}>
+                {selectedMethod.args &&
+                  selectedMethod.args.map((item, idx) => {
+                    return item.hidden ? null : (
+                      <StyledParameter key={item.title}>
+                        <div className="label">{item.title}</div>
+                        {item.inputType === 'select' ? (
+                          <select
+                            name={item.name}
+                            onChange={(e) => changeArgsValue(e, idx)}
+                            value={state.args[idx] || item.values[0].value}
+                          >
+                            {item.values.map((v) => {
+                              return <option value={v.value}>{v.title}</option>;
+                            })}
+                          </select>
+                        ) : (
+                          <input
+                            type="text"
+                            name={item.name}
+                            value={state.args[idx] || item.defaultValue}
+                            onChange={(e) => changeArgsValue(e, idx)}
+                            placeholder={item.placeholder}
+                          />
+                        )}
+                        {item.required ? (
+                          <div className="required">&nbsp;*required</div>
+                        ) : null}
+                      </StyledParameter>
+                    );
+                  })}
+              </div>
               <StyledParameter key={'actions'}>
                 <div className="label"></div>
                 <button onClick={estimate} style={{ marginRight: 10 }}>
