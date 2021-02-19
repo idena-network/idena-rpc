@@ -171,6 +171,19 @@
         title: "Delete flip",
         params: [{ title: "Hash", name: "hash", required: true }],
       },
+      {
+        method: "flip_getKeys",
+        title: "Get flip keys",
+        params: [
+          { title: "Address", name: "address", required: true },
+          { title: "Hash", name: "hash", required: true }
+        ],
+      },
+      {
+        method: "flip_getRaw",
+        title: "Get raw flip",
+        params: [{ title: "Hash", name: "hash", required: true }],
+      },
     ],
   },
   {
