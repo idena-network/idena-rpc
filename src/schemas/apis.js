@@ -378,6 +378,35 @@
         ],
       },
       {
+        method: "dna_delegate",
+        title: "Delegate",
+        paramsAsObject: true,
+        params: [
+          { title: "To", name: "to", required: true },
+          { title: "Nonce", type: "int", name: "nonce", defaultValue: 0 },
+          { title: "Epoch", type: "int", name: "epoch", defaultValue: 0 },
+        ],
+      },
+      {
+        method: "dna_undelegate",
+        title: "Undelegate",
+        paramsAsObject: true,
+        params: [
+          { title: "Nonce", type: "int", name: "nonce", defaultValue: 0 },
+          { title: "Epoch", type: "int", name: "epoch", defaultValue: 0 },
+        ],
+      },
+      {
+        method: "dna_killDelegator",
+        title: "Kill delegator",
+        paramsAsObject: true,
+        params: [
+          { title: "To", name: "to", required: true },
+          { title: "Nonce", type: "int", name: "nonce", defaultValue: 0 },
+          { title: "Epoch", type: "int", name: "epoch", defaultValue: 0 },
+        ],
+      },
+      {
         method: "dna_sendTransaction",
         title: "Change god address",
         paramsAsObject: true,
@@ -568,6 +597,28 @@
           { title: "Contract", name: "contract", required: true },
           { title: "Key", name: "key", type: "string" },
           { title: "Format", name: "format", type: "string" },
+        ],
+      },
+      {
+        method: "contract_readMap",
+        title: "Read contract map value",
+        params: [
+          { title: "Contract", name: "contract", required: true },
+          { title: "Map", name: "map", type: "string" },
+          { title: "Key", name: "key", type: "string" },
+          { title: "Format", name: "format", type: "string" },
+        ],
+      },
+      {
+        method: "contract_iterateMap",
+        title: "Iterate contract map values",
+        params: [
+          { title: "Contract", name: "contract", required: true },
+          { title: "Map", name: "map", type: "string" },
+          { title: "Continuation Token", name: "continuationToken", type: "string" },
+          { title: "Key Format", name: "keyFormat", type: "string" },
+          { title: "Value Format", name: "valyeFormat", type: "string" },
+          { title: "Limit", name: "limit", type: "int" },
         ],
       },
       {
