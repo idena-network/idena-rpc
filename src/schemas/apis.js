@@ -205,6 +205,29 @@
     ],
   },
   {
+    title: "IPFS API",
+    endpoints: [
+      {
+        method: "ipfs_cid",
+        title: "Calculate ipfs cid",
+        params: [{ title: "Data", name: "data", required: true }],
+      },
+      {
+        method: "ipfs_add",
+        title: "Add data to ipfs",
+        params: [
+          { title: "Data", name: "data", required: true },
+          { title: "Pin", name: "pin" },
+        ],
+      },
+      {
+        method: "ipfs_get",
+        title: "Get ipfs data",
+        params: [{ title: "Cid", name: "cid", required: true }],
+      },
+    ],
+  },
+  {
     title: "Dna API",
     endpoints: [
       {
@@ -504,6 +527,16 @@
           { title: "Epoch", type: "int", name: "epoch", defaultValue: 0 },
         ],
       },
+      {
+        method: "dna_storeToIpfs",
+        title: "Broadcast store to ipfs tx",
+        paramsAsObject: true,
+        params: [
+          { title: "Cid", name: "cid" },
+          { title: "Nonce", type: "int", name: "nonce", defaultValue: 0 },
+          { title: "Epoch", type: "int", name: "epoch", defaultValue: 0 },
+        ],
+      },
     ],
   },
   {
@@ -628,7 +661,11 @@
         params: [
           { title: "Contract", name: "contract", required: true },
           { title: "Map", name: "map", type: "string" },
-          { title: "Continuation Token", name: "continuationToken", type: "string" },
+          {
+            title: "Continuation Token",
+            name: "continuationToken",
+            type: "string",
+          },
           { title: "Key Format", name: "keyFormat", type: "string" },
           { title: "Value Format", name: "valyeFormat", type: "string" },
           { title: "Limit", name: "limit", type: "int" },
