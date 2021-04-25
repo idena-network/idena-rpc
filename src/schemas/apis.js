@@ -113,6 +113,11 @@
         title: "Get tx receipt",
         params: [{ title: "Tx hash", name: "hash", required: true }],
       },
+      {
+        method: "bcn_keyWord",
+        title: "Get flip keyword",
+        params: [{ title: "Key word index", name: "index", required: true, type : "int" }],
+      },
     ],
   },
   {
