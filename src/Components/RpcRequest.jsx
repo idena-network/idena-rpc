@@ -52,10 +52,11 @@ class RpcRequest extends Component {
   }
 
   prepareRequest() {
-    const extractValue = function(value, type) {
+    const extractValue = function (value, type) {
       if (type === 'int') return parseInt(value);
       if (type === 'float') return parseFloat(value);
       if (type === 'json') return JSON.parse(value);
+      if (type === 'bool') return !!value
       return value;
     };
 
@@ -64,7 +65,7 @@ class RpcRequest extends Component {
       if (this.props.data.paramsAsObject) {
         const obj = {};
         for (const parameter of this.props.data.params) {
-          if (this.state.params[parameter.name]) {
+          if (this.state.params.hasOwnProperty(parameter.name)) {
             obj[parameter.name] = extractValue(
               this.state.params[parameter.name],
               parameter.type
@@ -79,7 +80,7 @@ class RpcRequest extends Component {
         p.push(obj);
       } else {
         for (const parameter of this.props.data.params) {
-          if (this.state.params[parameter.name]) {
+          if (this.state.params.hasOwnProperty(parameter.name)) {
             p.push(
               extractValue(this.state.params[parameter.name], parameter.type)
             );
@@ -128,6 +129,14 @@ class RpcRequest extends Component {
     });
   }
 
+  changeCheckboxValue(e) {
+    const params = this.state.params;
+    params[e.target.name] = e.target.checked;
+    this.setState({
+      params: params
+    });
+  }
+
   render() {
     return (
       <StyledWrapper>
@@ -154,12 +163,19 @@ class RpcRequest extends Component {
                         })}
                       </select>
                     ) : (
-                      <input
-                        type="text"
+                      item.inputType === "checkbox" ? (<input
+                        type="checkbox"
                         name={item.name}
                         value={this.state.params[item.name] || ''}
-                        onChange={this.changeValue.bind(this)}
-                      />
+                        onChange={this.changeCheckboxValue.bind(this)}
+                      />) : (
+                        <input
+                          type="text"
+                          name={item.name}
+                          value={this.state.params[item.name] || ''}
+                          onChange={this.changeValue.bind(this)}
+                        />
+                      )
                     )}
                     {item.required ? (
                       <div className="required">&nbsp;*required</div>

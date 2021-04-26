@@ -222,7 +222,7 @@
         title: "Add data to ipfs",
         params: [
           { title: "Data", name: "data", required: true },
-          { title: "Pin", name: "pin" },
+          { title: "Pin", name: "pin", type: "bool", inputType: "checkbox" },
         ],
       },
       {
