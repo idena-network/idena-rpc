@@ -15,7 +15,7 @@ class Output extends Component {
         {this.props.value.response ? (
           <JSONPretty id="json-pretty" json={this.props.value.response} />
         ) : (
-          <div>Something went wrong :(</div>
+          <div>You are not connected to the node or the selected method is not allowed :(</div>
         )}
 
         <div>-------------------------------------</div>
