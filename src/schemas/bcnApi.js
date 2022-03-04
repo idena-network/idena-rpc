@@ -152,6 +152,11 @@ const bcnApi = {
       ],
     },
     {
+      method: "bcn_estimateRawTx",
+      title: "Estimate raw TX",
+      params: [{ title: "Tx", name: "tx", required: true }],
+    },
+    {
       method: "bcn_feePerGas",
       title: "Get fee rate",
     },
