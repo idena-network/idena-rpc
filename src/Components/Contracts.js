@@ -183,7 +183,7 @@ export default function Contracts({ onResponse }) {
             <select
               onChange={(e) => setState({ ...state, contract: e.target.value })}
             >
-              <option value="">Pick a cotract...</option>
+              <option value="">Pick a contract...</option>
               {contracts.map((contract) => (
                 <option value={contract.name}>{contract.name}</option>
               ))}
