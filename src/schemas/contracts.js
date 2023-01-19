@@ -421,7 +421,7 @@ const contracts = [
           {
             title: 'Oracle voting fee',
             type: 'int',
-            format: 'byte',
+            format: 'uint64',
             placeholder: '[1..100]',
             required: true,
           },
