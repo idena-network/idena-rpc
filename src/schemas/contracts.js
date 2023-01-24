@@ -115,7 +115,7 @@ const contracts = [
             placeholder: '20-100',
           },
           {
-            title: 'ComitteeSize',
+            title: 'CommitteeSize',
             type: 'int',
             format: 'uint64',
             placeholder: '>0',
@@ -419,10 +419,14 @@ const contracts = [
             required: true,
           },
           {
-            title: 'Oracle voting fee',
+            title: 'Oracle voting fee, %',
             type: 'int',
             format: 'uint64',
             placeholder: '[1..100]',
+            mask: {
+              mask: '999.999',
+              maskChar: '0',
+            },
             required: true,
           },
         ],

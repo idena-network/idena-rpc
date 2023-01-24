@@ -11,6 +11,7 @@ import {
   toHexString,
 } from '../utils';
 import sha3 from 'js-sha3';
+import InputMask from 'react-input-mask';
 
 const StyledWrapper = styled.div``;
 
@@ -74,7 +75,7 @@ export default function Contracts({ onResponse }) {
     }
 
     const extractParamValue = function(value, type) {
-      if (type === 'int') return parseInt(value || 0);
+      if (type === 'int') return parseInt((value || "0").replace(".", ""));
       if (type === 'float') return parseFloat(value || 0);
       if (type === 'json') return JSON.parse(value);
       if (type === 'jsonToHex') return toHex(value);
@@ -270,6 +271,15 @@ export default function Contracts({ onResponse }) {
                               return <option value={v.value}>{v.title}</option>;
                             })}
                           </select>
+                        ) : item.mask ? (
+                          <InputMask
+                              type="text"
+                              name={item.name}
+                              value={state.args[idx] || item.defaultValue}
+                              onChange={(e) => changeArgsValue(e, idx)}
+                              placeholder={item.placeholder}
+                              {...item.mask}
+                          />
                         ) : (
                           <input
                             type="text"
