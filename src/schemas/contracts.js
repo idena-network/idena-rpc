@@ -422,7 +422,7 @@ const contracts = [
             title: 'Oracle voting fee, %',
             type: 'int',
             format: 'uint64',
-            placeholder: '[1..100]',
+            placeholder: '[0..100]',
             mask: {
               mask: '999.999',
               maskChar: '0',
