@@ -143,6 +143,7 @@ const dnaApi = {
             { value: 11, title: "ChangeGodAddressTx" },
             { value: 12, title: "BurnTx" },
             { value: 13, title: "ChangeProfileTx" },
+            { value: 22, title: "ReplenishStakeTx" },
           ],
           defaultValue: 0,
         },
