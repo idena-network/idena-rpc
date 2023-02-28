@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
-import wretch from 'wretch';
-import styled from 'styled-components';
-import globals from '../globals';
+import React, { Component } from "react"
+import wretch from "wretch"
+import styled from "styled-components"
+import globals from "../globals"
+import { toHexString } from "../utils"
 
-const StyledWrapper = styled.div``;
+const StyledWrapper = styled.div``
 
 const StyledCaption = styled.div`
   font-size: 20px;
@@ -13,11 +14,11 @@ const StyledCaption = styled.div`
   &:hover {
     color: #777;
   }
-`;
+`
 
 const StyledBody = styled.div`
   padding: 5px;
-`;
+`
 
 const StyledParameter = styled.div`
   padding: 5px;
@@ -29,64 +30,64 @@ const StyledParameter = styled.div`
   .required {
     color: red;
   }
-`;
+`
 
 class RpcRequest extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
       showBody: false,
-      params: {}
-    };
+      params: {},
+    }
   }
 
   sendRequest(request) {
     return wretch(globals.host)
       .post(request)
       .json()
-      .catch(error => {
+      .catch((error) => {
         // error[errorType] (here, json) contains the parsed body
-        console.log(error);
-      });
+        console.log(error)
+      })
   }
 
   prepareRequest() {
-    const extractValue = function (value, type) {
-      if (type === 'int') return parseInt(value);
-      if (type === 'float') return parseFloat(value);
-      if (type === 'json') return JSON.parse(value);
-      if (type === 'bool') return !!value
-      return value;
-    };
+    const extractValue = function(value, type) {
+      if (type === "int") return parseInt(value)
+      if (type === "float") return parseFloat(value)
+      if (type === "json") return JSON.parse(value)
+      if (type === "bool") return !!value
+      return value
+    }
 
-    const p = [];
+    const p = []
     if (this.props.data.params) {
       if (this.props.data.paramsAsObject) {
-        const obj = {};
+        const obj = {}
         for (const parameter of this.props.data.params) {
           if (this.state.params.hasOwnProperty(parameter.name)) {
             obj[parameter.name] = extractValue(
               this.state.params[parameter.name],
               parameter.type
-            );
+            )
           } else if (parameter.defaultValue) {
             obj[parameter.name] = extractValue(
               parameter.defaultValue,
               parameter.type
-            );
+            )
           }
         }
-        p.push(obj);
+        p.push(obj)
       } else {
         for (const parameter of this.props.data.params) {
           if (this.state.params.hasOwnProperty(parameter.name)) {
             p.push(
               extractValue(this.state.params[parameter.name], parameter.type)
-            );
+            )
           } else if (parameter.defaultValue) {
-            p.push(extractValue(parameter.defaultValue, parameter.type));
-          } else p.push(null);
+            p.push(extractValue(parameter.defaultValue, parameter.type))
+          } else p.push(null)
         }
       }
     }
@@ -95,46 +96,58 @@ class RpcRequest extends Component {
       method: this.props.data.method,
       params: p,
       id: globals.id++,
-      key: globals.apikey
-    };
+      key: globals.apikey,
+    }
   }
 
   async getResponse() {
-    const start = new Date();
-    const request = this.prepareRequest();
-    const response = await this.sendRequest(request);
-    const end = new Date();
+    const start = new Date()
+    const request = this.prepareRequest()
+    const response = await this.sendRequest(request)
+    const end = new Date()
 
     const output = {
       start: start,
       end: end,
       request: request,
-      response: response
-    };
+      response: response,
+    }
 
-    this.props.onResponse(output);
+    this.props.onResponse(output)
   }
 
   toggleBody() {
     this.setState({
-      showBody: !this.state.showBody
-    });
+      showBody: !this.state.showBody,
+    })
   }
 
   changeValue(e) {
-    const params = this.state.params;
-    params[e.target.name] = e.target.value;
+    const params = this.state.params
+    params[e.target.name] = e.target.value
     this.setState({
-      params: params
-    });
+      params: params,
+    })
   }
 
   changeCheckboxValue(e) {
-    const params = this.state.params;
-    params[e.target.name] = e.target.checked;
+    const params = this.state.params
+    params[e.target.name] = e.target.checked
     this.setState({
-      params: params
-    });
+      params: params,
+    })
+  }
+
+  async changeFileValue(e) {
+    const params = this.state.params
+    let file = e.target.files[0]
+    const name = e.target.name;
+    var fileBuffer = await file.stream().getReader().read();    
+    params[name] = toHexString(fileBuffer.value, true)
+    this.setState({
+      params: params,
+    })   
+    console.log(params) 
   }
 
   render() {
@@ -145,12 +158,13 @@ class RpcRequest extends Component {
         </StyledCaption>
         {this.state.showBody ? (
           <StyledBody>
+            {console.log(this.props.data.params)}
             {this.props.data.params &&
-              this.props.data.params.map(item => {
+              this.props.data.params.map((item) => {
                 return item.hidden ? null : (
                   <StyledParameter key={item.name}>
                     <div className="label">{item.title}</div>
-                    {item.inputType === 'select' ? (
+                    {item.inputType === "select" ? (
                       <select
                         name={item.name}
                         onChange={this.changeValue.bind(this)}
@@ -158,37 +172,43 @@ class RpcRequest extends Component {
                           this.state.params[item.name] || item.values[0].value
                         }
                       >
-                        {item.values.map(v => {
-                          return <option value={v.value}>{v.title}</option>;
+                        {item.values.map((v) => {
+                          return <option value={v.value}>{v.title}</option>
                         })}
                       </select>
-                    ) : (
-                      item.inputType === "checkbox" ? (<input
+                    ) : item.inputType === "checkbox" ? (
+                      <input
                         type="checkbox"
                         name={item.name}
-                        value={this.state.params[item.name] || ''}
+                        value={this.state.params[item.name] || ""}
                         onChange={this.changeCheckboxValue.bind(this)}
-                      />) : (
-                        <input
-                          type="text"
-                          name={item.name}
-                          value={this.state.params[item.name] || ''}
-                          onChange={this.changeValue.bind(this)}
-                        />
-                      )
+                      />
+                    ) : item.inputType === "file" ? (
+                      <input
+                        type="file"
+                        name={item.name}                      
+                        onChange={this.changeFileValue.bind(this)}
+                      ></input>
+                    ) : (
+                      <input
+                        type="text"
+                        name={item.name}
+                        value={this.state.params[item.name] || ""}
+                        onChange={this.changeValue.bind(this)}
+                      />
                     )}
                     {item.required ? (
                       <div className="required">&nbsp;*required</div>
                     ) : null}
                   </StyledParameter>
-                );
+                )
               })}
             <button onClick={() => this.getResponse()}>Send request</button>
           </StyledBody>
         ) : null}
       </StyledWrapper>
-    );
+    )
   }
 }
 
-export default RpcRequest;
+export default RpcRequest

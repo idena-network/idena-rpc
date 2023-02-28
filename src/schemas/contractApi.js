@@ -13,6 +13,8 @@ const contractApi = {
       params: [
         { title: "From", name: "from" },
         { title: "Code hash", name: "codeHash" },
+        { title: "Code", name: "code", inputType: "file" },
+        { title: "Nonce", name: "nonce" },
         { title: "Contract stake", name: "amount" },
         { title: "Args", name: "args", type: "json" },
       ],
@@ -47,6 +49,8 @@ const contractApi = {
         { title: "From", name: "from" },
         { title: "Code hash", name: "codeHash" },
         { title: "Contract stake", name: "amount", type: "float" },
+        { title: "Code", name: "code", inputType: "file" },
+        { title: "Nonce", name: "nonce" },
         { title: "Args", name: "args", type: "json" },
         {
           title: "Max Fee",
@@ -166,5 +170,5 @@ const contractApi = {
       params: [{ title: "Contract", name: "contract" }],
     },
   ],
-};
-export default contractApi;
+}
+export default contractApi
