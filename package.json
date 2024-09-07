@@ -4,15 +4,15 @@
   "private": true,
   "dependencies": {
     "buffer": "^6.0.3",
-    "js-sha3": "^0.8.0",
-    "mobx": "^5.8.0",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
+    "js-sha3": "^0.9.3",
+    "mobx": "^6.13.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-input-mask": "^2.0.4",
-    "react-json-pretty": "^1.7.9",
-    "react-scripts": "2.1.1",
-    "styled-components": "^4.1.2",
-    "wretch": "^1.4.2"
+    "react-json-pretty": "^2.2.0",
+    "react-scripts": "5.0.1",
+    "styled-components": "^6.1.13",
+    "wretch": "^2.9.1"
   },
   "scripts": {
     "start": "react-scripts start",
